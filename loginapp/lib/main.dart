@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
+// import 'dart:html';
+
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/rendering.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loginapp/HomePage.dart';
 
 void main(){
   return runApp(const MyApp());
@@ -27,6 +30,33 @@ class LoginApp extends StatefulWidget{
 class _LoginAppState extends State{
     final TextEditingController _userNameController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
+
+    
+    void loginValidation(){
+      bool loginValidated = formkey.currentState!.validate();
+      String enteredEmail = _userNameController.text;
+      String enteredPass = _passwordController.text;
+      if(enteredEmail=="abhishek@gmail.com" && enteredPass=="abhishek"){
+      if(loginValidated){
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content:Text("Login Successful")));
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>const HomePage()),
+        );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("login failed"))
+        );
+      }
+      }
+       else{
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content:Text("Enter correct email and password"))
+          );
+        }
+      
+    }
 
     // GlobalKey<FormFieldState> usernameKey = GlobalKey<FormFieldState>();
     //  GlobalKey<FormFieldState> passnameKey = GlobalKey<FormFieldState>();
@@ -114,16 +144,7 @@ class _LoginAppState extends State{
                     ElevatedButton(onPressed: (){
                       // bool userNameValidated = usernameKey.currentState!.validate();
                       // bool formkey = passnameKey.currentState!.validate();
-                      bool loginValidated = formkey.currentState!.validate();
-                      if(loginValidated){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content:Text("Login Successful"))
-                        );
-                      }else{
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content:Text("Login failed"))
-                        );
-                      }
+                      loginValidation();
                     }, child:const Text("Submit"))
             
                 ],
